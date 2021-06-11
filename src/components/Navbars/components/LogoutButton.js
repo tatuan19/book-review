@@ -1,21 +1,20 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { app } from "../../../firebase/index";
+// import { app } from "../../../firebase/index";
 
 import AuthContext from "../../../store/auth-context";
 
-const LoginButton = () => {
+import { auth } from "../../../lib/api";
+
+const LogoutButton = () => {
   const ctx = useContext(AuthContext);
   const history = useHistory();
 
   const logoutHandler = () => {
     window.confirm("Are you sure you want to log out") &&
-      app
-        .auth()
-        .signOut()
+      auth.signOut()
         .then(() => {
           ctx.onLogout();
-          history.push("/");
         })
         .catch((error) => {
           console.log(error);
@@ -32,4 +31,4 @@ const LoginButton = () => {
   );
 };
 
-export default LoginButton;
+export default LogoutButton;

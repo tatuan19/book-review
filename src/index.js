@@ -14,8 +14,6 @@ import Profile from "./Pages/Profile/Profile";
 // import TestComponent from "TestComponent";
 import Layout from "layouts/Layout";
 import Footer from "./components/Footers/FooterSmall";
-// import Login from "Pages/AuthPage/Login";
-import Auth from "./Pages/AuthPage/Auth";
 import AddBook from "./Pages/AddBookPage/AddBook";
 
 import { AuthContextProvider } from "./store/auth-context";
@@ -29,16 +27,15 @@ ReactDOM.render(
     <BrowserRouter>
       <Layout>
         <Switch>
-          <Route path="/auth" component={Auth} />
           <Route path="/" exact component={Landing} />
 
-          <Route path="/profile/:username" component={Profile} />
-          <Route path="/book/:bookId" component={BookDetail} />
-          <Route path="/edit/:username" exact component={EditUserDetails} />
-          <Route path="/genre/:type" exact component={BookGenre} />
+          {/* <Route path="/profile/:username" component={Profile} /> */}
+          {/* <Route path="/book/:bookId" component={BookDetail} /> */}
+          {/* <Route path="/edit/:username" exact component={EditUserDetails} /> */}
+          {/* <Route path="/genre/:type" exact component={BookGenre} /> */}
 
-          <Route path="/addingBook" component={AddBook} />
-          <Route path="/editBook/:isbn" exact component={EditBook} />
+          {/* <Route path="/addingBook" component={AddBook} /> */}
+          {/* <Route path="/editBook/:isbn" exact component={EditBook} /> */}
 
           <Redirect from="*" to="/" />
         </Switch>

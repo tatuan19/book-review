@@ -1,10 +1,10 @@
 /*eslint-disable*/
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../store/auth-context";
+import { auth, storeUserInfo } from "../../lib/api";
 
 // components
-
 import PagesDropdown from "components/Dropdowns/PagesDropdown.js";
 import LoginButton from "./components/LoginButton";
 import LogoutButton from "./components/LogoutButton";
@@ -12,6 +12,17 @@ import LogoutButton from "./components/LogoutButton";
 const Navbar = (props) => {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const ctx = useContext(AuthContext);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      let newUser = null;
+      if (user) {
+        newUser = await storeUserInfo(user);
+        ctx.onLogin(user.displayName);
+      }
+
+    });
+  }, []);
 
   return (
     <>
@@ -22,7 +33,7 @@ const Navbar = (props) => {
               className="text-white text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
               to="/"
             >
-              Arn-Rai-Dee
+              Book Review
             </Link>
             <button
               className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"

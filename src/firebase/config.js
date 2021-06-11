@@ -1,10 +1,10 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyCr4wY9c3Zw4IEF40XaKAHLm7M5oQeWkWA",
-  authDomain: "arn-rai-dee.firebaseapp.com",
-  projectId: "arn-rai-dee",
-  storageBucket: "arn-rai-dee.appspot.com",
-  messagingSenderId: "328643852368",
-  appId: "1:328643852368:web:624e7c75df003214867955",
+  apiKey: "AIzaSyCQrHcf4WtlM_LyrZssfy_QpwxXlkIQqUY",
+  authDomain: "book-review-442fc.firebaseapp.com",
+  projectId: "book-review-442fc",
+  storageBucket: "book-review-442fc.appspot.com",
+  messagingSenderId: "437559528494",
+  appId: "1:437559528494:web:ed864c99d68f1677c823bf"
 };
 
 export default firebaseConfig;
