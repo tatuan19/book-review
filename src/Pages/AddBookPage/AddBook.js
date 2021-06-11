@@ -8,9 +8,10 @@ export default function Addbook() {
   const ctx = useContext(AuthContext);
   const history = useHistory();
 
-  if (ctx.currentUser.toString() !== "admin") {
-    history.push("/");
-  }
+  // if (ctx.currentUser.toString() !== "admin") {
+  //   history.push("/");
+  // }
+  
   return (
     <>
       <section className="relative block h-500-px">

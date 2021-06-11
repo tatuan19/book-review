@@ -15,26 +15,9 @@ const db = firebase.firestore();
 export const auth = firebase.auth();
 export default firebase;
 
-// const FIREBASE_DOMAIN =
-//   "https://arn-rai-dee-default-rtdb.asia-southeast2.firebasedatabase.app/";
-
-export async function editUser(userData) {
-  // const response = await fetch(
-  //   `${FIREBASE_DOMAIN}/users/${userData.username}.json`,
-  //   {
-  //     method: "PUT",
-  //     body: JSON.stringify(userData),
-  //   }
-  // );
-  // const data = await response.json();
-
-  // if (!response.ok) {
-  //   throw new Error(data.message || "Could not create user.");
-  // }
-
-  // return null;
-}
-
+/**
+ * Books
+ */
 export async function getAllBooks() {
   try {
     const snapshot = await db
@@ -43,6 +26,7 @@ export async function getAllBooks() {
     const items = snapshot.docs.map(
       (doc) => ({ ...doc.data(), id: doc.id })
     );
+    console.log(items)
     return items;
   } catch (err) {
     console.log(err);
@@ -52,16 +36,26 @@ export async function getAllBooks() {
 
 export async function getSingleBook(bookId) {
   try {
-    const snapshot = await db.collection("Books").doc(bookId).get();
-    const loadedBook = {
-      id: bookId,
-      ...snapshot.data(),
+    const bookRef = db.collection("Books");
+    const snapshot = await bookRef.where("bookId", "==", bookId).get();
+    if (snapshot.empty) {
+      console.log('No matching documents.');
+      return;
     }
-    console.log(loadedBook)
+    var loadedBook;
+    snapshot.forEach(doc => {
+      // console.log(doc.id, '=>', doc.data());
+      loadedBook = {
+        id: doc.id,
+        ...doc.data(),
+      }
+      console.log(loadedBook);
+    });
+
     return loadedBook;
   } catch (err) {
     console.log(err);
-    return undefined;
+    return;
   }
 }
 
@@ -91,34 +85,87 @@ export async function deleteBook(bookId) {
   });
 }
 
-export async function getProfile(username) {
-  // const response = await fetch(`${FIREBASE_DOMAIN}/users/${username}.json`);
-  // const data = await response.json();
+/**
+ * Users
+ */
+export async function getProfile(email) {
+  try {
+    const userRef = db.collection("Users");
+    const snapshot = await userRef.where("username", "==", email).get();
+    if (snapshot.empty) {
+      console.log('No matching documents.');
+      return;
+    }
+    var loadedUser;
+    snapshot.forEach(doc => {
+      // console.log(doc.id, '=>', doc.data());
+      loadedUser = {
+        id: doc.id,
+        ...doc.data(),
+      }
+      console.log(loadedUser);
+    });
 
-  // if (!response.ok) {
-  //   throw new Error(data.message || "Could not fetch username");
-  // }
-
-  // const loadedQuote = {
-  //   id: username,
-  //   ...data,
-  // };
-
-  // return loadedQuote;
+    return loadedUser;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
 }
 
+export async function editUser(userData) {
+  try {
+    const userRef = db.collection("Users");
+    // const snapshot = await userRef.where("username", "==", email).get();
+    // if (snapshot.empty) {
+    //   console.log('No matching documents.');
+    //   return;
+    // }
+    // var loadedUser;
+    // snapshot.forEach(doc => {
+    //   // console.log(doc.id, '=>', doc.data());
+    //   loadedUser = {
+    //     id: doc.id,
+    //     ...doc.data(),
+    //   }
+    //   console.log(loadedUser);
+    // });
+
+    // return loadedUser;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+
+/**
+ * Comments
+ */
 export async function addComment(commentData) {
-  // const response = await fetch(
-  //   `${FIREBASE_DOMAIN}/comments/${commentData.bookId}.json`,
-  //   {
-  //     method: "POST",
-  //     body: JSON.stringify(commentData.commentDetails),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   }
-  // );
-  // const data = await response.json();
+  try {
+    console.log(commentData)
+    const commentRef = await db.collection("Comments").doc(commentData.bookId).get();
+    const data = commentRef.data().comments;
+    // const transformedComments = [];
+
+    // for (const key in data) {
+    //   const commentObj = {
+    //     id: key,
+    //     ...data[key],
+    //   };
+    //   console.log(commentObj);
+
+    //   transformedComments.push(commentObj);
+    // }
+
+    // console.log(transformedComments);
+
+    return data;
+    // return transformedComments;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
 
   // if (!response.ok) {
   //   throw new Error(data.message || "Could not add comment.");
@@ -162,9 +209,14 @@ export const uiConfig = {
 
 export const storeUserInfo = async (user) => {
   const { uid } = user;
+  console.log(user)
   const userDoc = await db.collection("Users").doc(uid).get();
   if (!userDoc.exists) {
-    await db.collection("Users").doc(uid).set({ name: user.displayName });
+    await db.collection("Users").doc(uid).set({
+      name: user.displayName,
+      username: user.email,
+      photoURL: user.photoURL
+    });
     return {
       name: user.displayName,
       id: uid,

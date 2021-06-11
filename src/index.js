@@ -29,13 +29,13 @@ ReactDOM.render(
         <Switch>
           <Route path="/" exact component={Landing} />
 
-          {/* <Route path="/profile/:username" component={Profile} /> */}
+          <Route path="/profile/:username" component={Profile} />
           <Route path="/book/:bookId" component={BookDetail} />
-          {/* <Route path="/edit/:username" exact component={EditUserDetails} /> */}
+          <Route path="/edit/:username" exact component={EditUserDetails} />
           {/* <Route path="/genre/:type" exact component={BookGenre} /> */}
 
-          {/* <Route path="/addingBook" component={AddBook} /> */}
-          {/* <Route path="/editBook/:isbn" exact component={EditBook} /> */}
+          <Route path="/addingBook" component={AddBook} />
+          <Route path="/editBook/:isbn" exact component={EditBook} />
 
           <Redirect from="*" to="/" />
         </Switch>

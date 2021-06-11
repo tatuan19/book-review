@@ -82,7 +82,8 @@ const PagesDropdown = () => {
         >
           Fiction
         </Link>
-        {ctx.currentUser === "admin" && <AdminLayout />}
+        {/* {ctx.currentUser === "admin" && <AdminLayout />} */}
+        <AdminLayout />
         {!ctx.isLoggedIn && <AuthLayout />}
         {ctx.isLoggedIn && <ProfileLayout currentUser={ctx.currentUser} />}
       </div>

@@ -18,7 +18,7 @@ const Navbar = (props) => {
       let newUser = null;
       if (user) {
         newUser = await storeUserInfo(user);
-        ctx.onLogin(user.displayName);
+        ctx.onLogin(user.email);
       }
 
     });
