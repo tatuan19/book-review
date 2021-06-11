@@ -30,7 +30,7 @@ ReactDOM.render(
           <Route path="/" exact component={Landing} />
 
           {/* <Route path="/profile/:username" component={Profile} /> */}
-          {/* <Route path="/book/:bookId" component={BookDetail} /> */}
+          <Route path="/book/:bookId" component={BookDetail} />
           {/* <Route path="/edit/:username" exact component={EditUserDetails} /> */}
           {/* <Route path="/genre/:type" exact component={BookGenre} /> */}
 

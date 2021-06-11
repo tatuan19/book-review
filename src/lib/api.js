@@ -35,6 +35,36 @@ export async function editUser(userData) {
   // return null;
 }
 
+export async function getAllBooks() {
+  try {
+    const snapshot = await db
+      .collection("Books")
+      .get();
+    const items = snapshot.docs.map(
+      (doc) => ({ ...doc.data(), id: doc.id })
+    );
+    return items;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+}
+
+export async function getSingleBook(bookId) {
+  try {
+    const snapshot = await db.collection("Books").doc(bookId).get();
+    const loadedBook = {
+      id: bookId,
+      ...snapshot.data(),
+    }
+    console.log(loadedBook)
+    return loadedBook;
+  } catch (err) {
+    console.log(err);
+    return undefined;
+  }
+}
+
 export async function addBook(bookData) {
   try {
     const bookRef = db.collection("Books");
@@ -77,37 +107,6 @@ export async function getProfile(username) {
   // return loadedQuote;
 }
 
-export async function getAllBooks() {
-  try {
-    const snapshot = await db
-      .collection("Books")
-      .get();
-    const items = snapshot.docs.map(
-      (doc) => ({ ...doc.data(), id: doc.id })
-    );
-    return items;
-  } catch (err) {
-    console.log(err);
-    return [];
-  }
-}
-
-export async function getSingleBook(bookId) {
-  // const response = await fetch(`${FIREBASE_DOMAIN}/Books/${bookId}.json`);
-  // const data = await response.json();
-
-  // if (!response.ok) {
-  //   throw new Error(data.message || "Could not fetch quote.");
-  // }
-
-  // const loadedBook = {
-  //   id: bookId,
-  //   ...data,
-  // };
-
-  // return loadedBook;
-}
-
 export async function addComment(commentData) {
   // const response = await fetch(
   //   `${FIREBASE_DOMAIN}/comments/${commentData.bookId}.json`,
@@ -129,28 +128,28 @@ export async function addComment(commentData) {
 }
 
 export async function getAllComments(bookId) {
-  // const response = await fetch(`${FIREBASE_DOMAIN}/comments/${bookId}.json`);
+  try {
+    const commentRef = await db.collection("Comments").doc(bookId).get();
+    const data = commentRef.data().comments;
+    const transformedComments = [];
 
-  // const data = await response.json();
+    for (const key in data) {
+      const commentObj = {
+        id: key,
+        ...data[key],
+      };
+      console.log(commentObj);
 
-  // if (!response.ok) {
-  //   throw new Error(data.message || "Could not get comments.");
-  // }
+      transformedComments.push(commentObj);
+    }
 
-  // const transformedComments = [];
+    console.log(transformedComments);
 
-  // for (const key in data) {
-  //   const commentObj = {
-  //     id: key,
-  //     ...data[key],
-  //   };
-  //   console.log(commentObj);
-
-  //   transformedComments.push(commentObj);
-  // }
-
-  // console.log(transformedComments);
-  // return transformedComments;
+    return transformedComments;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
 }
 
 export const uiConfig = {
