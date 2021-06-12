@@ -51,6 +51,9 @@ const Navbar = (props) => {
             }
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+              <li className="flex items-center" style={{color: "white"}}>
+                Hello {ctx.currentUser}
+              </li>
               <li className="flex items-center">
                 <PagesDropdown
                   open={navbarOpen}
