@@ -15,6 +15,10 @@ const db = firebase.firestore();
 export const auth = firebase.auth();
 export default firebase;
 
+const storage = firebase.storage();
+
+export { storage};
+
 /**
  * Books
  */

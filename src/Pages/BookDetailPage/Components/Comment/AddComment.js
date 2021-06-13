@@ -1,11 +1,13 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
+
 
 import useInput from "../../../../hooks/use-input";
 import useHttp from "../../../../hooks/use-http";
 import { addComment } from "../../../../lib/api";
 
 import AuthContext from "../../../../store/auth-context";
+import Rating from "./Rating";
 
 const AddComment = (props) => {
   const ctx = useContext(AuthContext);
@@ -14,6 +16,7 @@ const AddComment = (props) => {
   const isbn = props.isbn;
 
   const { sendRequest, status } = useHttp(addComment);
+  const [ratingStar, setRatingStar] = useState('');
 
   useEffect(() => {
     if (status === "completed") {
@@ -37,11 +40,14 @@ const AddComment = (props) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    //cancel reload page
+
     await sendRequest({
       commentDetails: {
         username: ctx.currentUser,
         comment: enteredComment,
-        score: enteredScore,
+        // score: enteredScore,
+        score: ratingStar,
       },
       bookId: isbn,
     });
@@ -49,7 +55,9 @@ const AddComment = (props) => {
 
   let formIsValid = false;
 
-  if (enteredScore && enteredComment) {
+  // if (enteredScore && enteredComment) {
+  if (ratingStar !== '' && enteredComment) {
+
     formIsValid = true;
   }
 
@@ -59,6 +67,11 @@ const AddComment = (props) => {
 
   if (enteredCommentisValid && enteredScoreisValid) {
     formIsValid = true;
+  }
+
+  const handleRating = (data) => {
+    console.log(data);
+    setRatingStar(data);
   }
 
   return (
@@ -73,7 +86,7 @@ const AddComment = (props) => {
             </div>
           </div>
 
-          <div className="py-6 mx-auto mt-32 sm:mt-0 ">
+          {/* <div className="py-6 mx-auto mt-32 sm:mt-0 ">
             <input
               value={enteredScore}
               type="number"
@@ -90,6 +103,9 @@ const AddComment = (props) => {
               className="input-group-text fas fa-star"
               style={{ color: "salmon" }}
             ></span>
+          </div> */}
+          <div className="py-6 mx-auto mt-32 sm:mt-0 ">
+            <Rating handleRating={handleRating}></Rating>
           </div>
         </div>
 
