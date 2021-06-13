@@ -48,10 +48,10 @@ const AddFrom = () => {
   } = useInput(isNotEmpty);
 
   const { value: enteredPages, valueChangeHandler: pagesChangeHandler } =
-    useInput(() => {});
+    useInput(() => { });
 
   const { value: enteredPublish, valueChangeHandler: publishChangeHandler } =
-    useInput(() => {});
+    useInput(() => { });
 
   useEffect(() => {
     if (status === "completed") {
@@ -107,6 +107,7 @@ const AddFrom = () => {
                     src={bookImage}
                     className="shadow-lg mx-auto max-w-200-px"
                   />
+                  {/* <PreviewBookImg></PreviewBookImg> */}
                 </div>
 
                 <form onSubmit={submitHandler}>
