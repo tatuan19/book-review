@@ -15,7 +15,7 @@ export default function FooterSmall(props) {
                   onclick="return false;"
                   className="text-white hover:text-blueGray-300 text-sm font-semibold py-1 px-2"
                 >
-                  SamSan Tech
+                  チーム３
                 </a>
               </div>
             </div>
@@ -23,7 +23,7 @@ export default function FooterSmall(props) {
               <ul className="flex flex-wrap list-none md:justify-end  justify-center">
                 <li>
                   <a
-                    href="https://github.com/nitiponth/React-book-reviews"
+                    href="https://github.com/tatuan19/book-review"
                     className="text-white hover:text-blueGray-300 text-sm font-semibold block py-1 px-3"
                   >
                     About us

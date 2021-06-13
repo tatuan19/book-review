@@ -17,9 +17,9 @@ const Book = (props) => {
               {props.author}
             </p>
             <p className="mt-2 mb-4 text-blueGray-500 ">{props.desciption}</p>
-            {/* <div style={{ color: "salmon", textAlign: "right" }}>
-              {props.score} <i className="fas fa-star text-yellow"></i>
-            </div> */}
+            <div style={{ color: "salmon", textAlign: "center" }}>
+              4 <i className="fas fa-star text-yellow"></i> /20 reviews
+            </div>
           </div>
         </div>
       </div>
