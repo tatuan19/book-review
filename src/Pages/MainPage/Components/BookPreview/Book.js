@@ -18,7 +18,7 @@ const Book = (props) => {
             </p>
             <p className="mt-2 mb-4 text-blueGray-500 ">{props.desciption}</p>
             <div style={{ color: "salmon", textAlign: "center" }}>
-              {props.score} <i className="fas fa-star text-yellow"></i> / {props.reviews} reviews
+              {props.reviews ? Math.round(props.score * 10 / props.reviews) / 10 : 0} <i className="fas fa-star text-yellow"></i> / {props.reviews} reviews
             </div>
           </div>
         </div>

@@ -46,7 +46,7 @@ export async function getSingleBook(bookId) {
     snapshot.forEach(doc => {
       // console.log(doc.id, '=>', doc.data());
       loadedBook = {
-        id: doc.id,
+        // id: doc.id,
         ...doc.data(),
       }
       // console.log(loadedBook);
@@ -161,7 +161,7 @@ export const updateUser = async (userData) => {
  */
 export async function addComment(commentData) {
   try {
-    console.log(commentData)
+    // console.log(commentData)
     const commentRef = await db.collection("Comments").doc(commentData.bookId).get();
 
     if (!commentRef.exists) {
@@ -179,25 +179,28 @@ export async function addComment(commentData) {
         score: commentData.data.score,
         username: commentData.data.username
       });
-      console.log(data);
+      // console.log(data);
       await db.collection("Comments").doc(commentData.bookId).update({
         comments: data
       });
     }
     // update book
-    // const snapshot = await db.collection("Books").where("bookId", "==", commentData.bookId).get();
-    // if (snapshot.empty) {
-    //   console.log('No matching documents.');
-    //   return;
-    // }
-    // var loadedBook;
-    // snapshot.forEach(doc => {
-    //   loadedBook = doc;
-    // });
-    // loadedBook.data().reviews = loadedBook.data().reviews + 1;
-    // loadedBook.data().score = loadedBook.data().score + commentData.data.score;
-    // await db.collection("Books").doc(loadedBook.id).update(loadedBook);
-
+    const snapshot = await db.collection("Books").where("bookId", "==", commentData.bookId).get();
+    if (snapshot.empty) {
+      alert('No matching documents.');
+      return;
+    }
+    var loadedBook;
+    snapshot.forEach(doc => {
+      loadedBook = doc;
+    });
+    const newData = {
+      ...loadedBook.data(),
+      reviews: loadedBook.data().reviews + 1,
+      score: loadedBook.data().score + commentData.data.score
+    }
+    // console.log(newData)
+    await db.collection("Books").doc(loadedBook.id).update(newData);
   } catch (err) {
     console.log(err);
   }

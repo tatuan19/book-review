@@ -63,7 +63,7 @@ const Profile = (props) => {
             className="absolute top-0 w-full h-full bg-center bg-cover"
             style={{
               backgroundImage:
-              `url(${require("assets/img/profile-img.jpg").default})`,
+              `url(${require("assets/img/book.jpg").default})`,
             }}
           >
             <span
