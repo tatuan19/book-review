@@ -40,13 +40,10 @@ const AddComment = (props) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    //cancel reload page
-
     await sendRequest({
-      commentDetails: {
+      data: {
         username: ctx.currentUser,
         comment: enteredComment,
-        // score: enteredScore,
         score: ratingStar,
       },
       bookId: isbn,
@@ -55,9 +52,7 @@ const AddComment = (props) => {
 
   let formIsValid = false;
 
-  // if (enteredScore && enteredComment) {
   if (ratingStar !== '' && enteredComment) {
-
     formIsValid = true;
   }
 
@@ -81,7 +76,7 @@ const AddComment = (props) => {
           <div className="flex mx-auto py-4 lg:pt-4 pt-8">
             <div className="mr-0 p-3 text-center ">
               <span className="text-xl font-bold block tracking-wide text-blueGray-600">
-                username : {ctx.currentUser}
+                Your comment
               </span>
             </div>
           </div>
@@ -116,7 +111,7 @@ const AddComment = (props) => {
             rows="5"
             type="text"
             className="placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-            placeholder="Comment"
+            placeholder="Write something about this book"
             onChange={commentChangeHandler}
           />
           <div className="text-left my-6">

@@ -5,7 +5,7 @@ import useHttp from "../../../hooks/use-http";
 
 const ProfileDetail = (props) => {
   const history = useHistory();
-  const { photoURL, name, userLocation, userDetail, username } =
+  const { photoURL, name, bio, username } =
     props.profile;
 
   const editUserHandler = (props) => {
@@ -50,19 +50,15 @@ const ProfileDetail = (props) => {
           {name}
         </h3>
         <div className="text-xl leading-normal mt-0 mb-2 text-blueGray-500 font-bold">
-          <i className="fas fa-at mr-2 text-lg text-blueGray-600"></i>
+          <i className="fas fa-at mr-2 text-lg text-blueGray-600 mb-5"></i>
           {username}
-        </div>
-        <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-          <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>{" "}
-          {userLocation}
         </div>
         <div className="flex flex-wrap justify-center">
           <p
             className="mb-4 text-lg leading-relaxed text-blueGray-700 break-words"
             style={{ paddingLeft: "10rem", paddingRight: "10rem" }}
           >
-            {userDetail}
+            {bio}
           </p>
         </div>
       </div>

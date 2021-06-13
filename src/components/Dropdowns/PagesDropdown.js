@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { createPopper } from "@popperjs/core";
 
 import AuthContext from "../../store/auth-context";
-import AuthLayout from "./components/AuthLayout";
 import ProfileLayout from "./components/ProfileLayout";
 import AdminLayout from "./components/AdminLayout";
 
@@ -35,7 +34,7 @@ const PagesDropdown = () => {
           dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
         }}
       >
-        Browse
+        Account
       </a>
       <div
         ref={popoverDropdownRef}
@@ -45,47 +44,9 @@ const PagesDropdown = () => {
         }
         style={{ marginTop: "0.5rem" }}
       >
-        <span
-          className={
-            "text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-blueGray-400"
-          }
-        >
-          Genres
-        </span>
-        <Link
-          to="/genre/Biography"
-          className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-        >
-          Biography
-        </Link>
-        <Link
-          to="/genre/Business"
-          className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-        >
-          Business
-        </Link>
-        <Link
-          to="/genre/History"
-          className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-        >
-          History
-        </Link>
-        <Link
-          to="/genre/Nonfiction"
-          className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-        >
-          Nonfiction
-        </Link>
-        <Link
-          to="/genre/Fiction"
-          className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-        >
-          Fiction
-        </Link>
         {/* {ctx.currentUser === "admin" && <AdminLayout />} */}
         <AdminLayout />
-        {!ctx.isLoggedIn && <AuthLayout />}
-        {ctx.isLoggedIn && <ProfileLayout currentUser={ctx.currentUser} />}
+        <ProfileLayout currentUser={ctx.currentUser} />
       </div>
     </>
   );

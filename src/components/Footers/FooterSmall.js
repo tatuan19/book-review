@@ -15,7 +15,7 @@ export default function FooterSmall(props) {
                   onclick="return false;"
                   className="text-white hover:text-blueGray-300 text-sm font-semibold py-1 px-2"
                 >
-                  チーム３
+                  Team ３
                 </a>
               </div>
             </div>

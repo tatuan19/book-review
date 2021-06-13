@@ -18,7 +18,7 @@ const Navbar = (props) => {
       let newUser = null;
       if (user) {
         newUser = await storeUserInfo(user);
-        ctx.onLogin(user.email);
+        ctx.onLogin(user.email.split('@')[0]);
       }
 
     });
@@ -51,15 +51,19 @@ const Navbar = (props) => {
             }
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-              <li className="flex items-center" style={{color: "white"}}>
-                Hello {ctx.currentUser}
-              </li>
-              <li className="flex items-center">
-                <PagesDropdown
-                  open={navbarOpen}
-                  onClose={() => setNavbarOpen(!navbarOpen)}
-                />
-              </li>
+              {ctx.currentUser ? (
+                <>
+                  <li className="flex items-center" style={{ color: "white" }}>
+                    Hello <span style={{fontWeight: "bold", marginLeft: "5px"}}>{ctx.currentUser}</span>
+                  </li>
+                  <li className="flex items-center">
+                    <PagesDropdown
+                      open={navbarOpen}
+                      onClose={() => setNavbarOpen(!navbarOpen)}
+                    />
+                  </li>
+                </>
+              ) : null}
               <li className="flex items-center">
                 {!ctx.isLoggedIn && <LoginButton />}
                 {ctx.isLoggedIn && <LogoutButton />}

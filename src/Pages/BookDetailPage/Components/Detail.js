@@ -129,7 +129,7 @@ const Detail = (props) => {
                     </div>
                     <div>
                       <h4 className="text-l mt-5 font-semibold">
-                        <Link to={`/genre/${props.book.genres}`}>{props.book.genres}</Link>
+                        {props.book.genres}
                       </h4>
                     </div>
                   </div>

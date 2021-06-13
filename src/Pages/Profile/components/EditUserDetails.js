@@ -3,8 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 
 import useInput from "../../../hooks/use-input";
 import useHttp from "../../../hooks/use-http";
-import { editUser } from "../../../lib/api";
-import { getProfile } from "../../../lib/api";
+import { getProfile, updateUser } from "../../../lib/api";
 
 import UploadButton from "./UploadButton";
 import AuthContext from "../../../store/auth-context";
@@ -21,11 +20,11 @@ const EditUserDetails = (props) => {
   }
 
   const { sendRequest: updateProfile, status: updateStatus } =
-    useHttp(editUser);
+    useHttp(updateUser);
 
-  const [profile, setProfile] = useState(
-    "https://firebasestorage.googleapis.com/v0/b/arn-rai-dee.appspot.com/o/profile%2Fblank-profile.png?alt=media&token=d0ae9cbf-1394-4308-aa37-e06a4867bb76"
-  );
+  const [avatar, setAvatar] = useState("");
+  const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
 
   const {
     sendRequest,
@@ -34,16 +33,15 @@ const EditUserDetails = (props) => {
     error,
   } = useHttp(getProfile, true);
 
-  const [profileData, setProfileData] = useState("");
-
   useEffect(() => {
     sendRequest(username.toLowerCase());
   }, [sendRequest, username]);
 
   useEffect(() => {
     if (status === "completed") {
-      setProfile(loadedProfile.userProfile);
-      setProfileData(loadedProfile);
+      setAvatar(loadedProfile.photoURL);
+      setName(loadedProfile.name);
+      setBio(loadedProfile.bio ? loadedProfile.bio : "");
     }
   }, [status, loadedProfile]);
 
@@ -53,31 +51,20 @@ const EditUserDetails = (props) => {
     }
   }, [updateStatus, history, loadedProfile]);
 
-  const { value: enteredName, valueChangeHandler: nameChangeHandler } =
-    useInput(() => {});
-
-  const { value: enteredLocation, valueChangeHandler: LocationChangeHandler } =
-    useInput(() => {});
-
-  const { value: enteredDetails, valueChangeHandler: detailsChangeHandler } =
-    useInput(() => {});
-
   const imgUploadHandler = (img) => {
-    setProfile(img);
+    setAvatar(img);
   };
 
   const submitHandler = async (event) => {
     event.preventDefault();
     const userData = {
-      username: loadedProfile.username,
       email: loadedProfile.email,
-      uid: loadedProfile.uid,
-      name: enteredName || loadedProfile.name,
-      userLocation: enteredLocation || loadedProfile.userLocation,
-      userDetail: enteredDetails || loadedProfile.userDetail,
-      userProfile: profile,
+      name: name,
+      username: username,
+      bio: bio,
+      photoURL: avatar
     };
-    await updateProfile(userData);
+    await updateProfile({id: loadedProfile.id, data: userData});
     history.push(`/profile/${loadedProfile.username}`);
   };
 
@@ -104,7 +91,7 @@ const EditUserDetails = (props) => {
                     <div className="px-6">
                       <img
                         alt="..."
-                        src={profile}
+                        src={avatar}
                         className="shadow-lg rounded-full mx-auto max-w-120-px"
                       />
                     </div>
@@ -122,9 +109,8 @@ const EditUserDetails = (props) => {
                         type="text"
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         id="name"
-                        value={enteredName}
-                        onChange={nameChangeHandler}
-                        placeholder={profileData.name}
+                        value={name}
+                        onChange={(e)=> {setName(e.target.value)}}
                       />
                     </div>
 
@@ -133,15 +119,14 @@ const EditUserDetails = (props) => {
                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                         htmlFor="grid-password"
                       >
-                        Location
+                        Username
                       </label>
                       <input
                         type="text"
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        id="location"
-                        value={enteredLocation}
-                        onChange={LocationChangeHandler}
-                        placeholder={profileData.userLocation}
+                        id="username"
+                        value={username}
+                        disabled
                       />
                     </div>
 
@@ -157,9 +142,8 @@ const EditUserDetails = (props) => {
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         style={{ height: "100px" }}
                         id="details"
-                        value={enteredDetails}
-                        onChange={detailsChangeHandler}
-                        placeholder={profileData.userDetail}
+                        value={bio}
+                        onChange={(e)=> {setBio(e.target.value)}}
                       />
                     </div>
 
@@ -168,7 +152,7 @@ const EditUserDetails = (props) => {
                         className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                         type="submit"
                       >
-                        Edit account
+                        Save
                       </button>
                     </div>
                   </form>

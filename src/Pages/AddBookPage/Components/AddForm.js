@@ -14,7 +14,7 @@ const AddFrom = () => {
   const history = useHistory();
 
   const [bookImage, setBookImage] = useState(
-    "https://firebasestorage.googleapis.com/v0/b/arn-rai-dee.appspot.com/o/book_img%2Fbook.jpg?alt=media&token=a10fcc24-fc0a-4e7e-96ae-f8cada52f055"
+    "https://smarttrain.edu.vn/assets/uploads/2017/10/book-icon-icon-search-engine-6.png"
   );
 
   const {
@@ -74,12 +74,14 @@ const AddFrom = () => {
   const formClassName = formIsValid
     ? "bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
     : "cursor-not-allowed bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150";
+
   const imgUploadHandler = (img) => {
     setBookImage(img);
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
+
     const bookData = {
       genres: enteredGenres,
       title: enteredTitle,
@@ -90,6 +92,7 @@ const AddFrom = () => {
       publish: enteredPublish,
       link: bookImage,
       score: 0,
+      reviews: 0
     };
 
     sendRequest(bookData);
@@ -107,21 +110,29 @@ const AddFrom = () => {
                     src={bookImage}
                     className="shadow-lg mx-auto max-w-200-px"
                   />
-                  {/* <PreviewBookImg></PreviewBookImg> */}
                 </div>
 
                 <form onSubmit={submitHandler}>
                   <UploadBookButton imgUpload={imgUploadHandler} />
                   <br></br>
+
                   <div className="relative w-full mb-3 mt-10">
-                    <input
+                    <select id="genres" onChange={genresChangeHandler}
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                      <option value="Biography">Biography</option>
+                      <option value="Business">Business</option>
+                      <option value="History">History</option>
+                      <option value="Nonfiction">Nonfiction</option>
+                      <option value="Fiction">Fiction</option>
+                    </select>
+                    {/* <input
                       id="genres"
                       value={enteredGenres}
                       type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      onChange={genresChangeHandler}
+                      
+                      
                       placeholder="Genre (Example: Fiction)"
-                    />
+                    /> */}
                   </div>
                   <br></br>
                   <div className="textarea w-full mb-3">

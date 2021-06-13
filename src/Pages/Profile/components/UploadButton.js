@@ -1,14 +1,11 @@
 import React from "react";
-// import { app } from "../../../firebase/index";
+import { uploadImage } from "./../../../lib/api";
 
 const UploadButton = (props) => {
   const onFileChange = async (e) => {
-    // const file = e.target.files[0];
-    // const storageRef = app.storage().ref();
-    // const fileRef = storageRef.child(`profile/${file.name}`);
-    // await fileRef.put(file);
-    // const link = await fileRef.getDownloadURL();
-    // props.imgUpload(link);
+    const file = e.target.files[0];
+    const imageUrl = await uploadImage(file);
+    props.imgUpload(imageUrl);
   };
   return (
     <input

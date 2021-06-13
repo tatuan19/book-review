@@ -48,6 +48,7 @@ const BooksPreview = (props) => {
         author={book.author}
         bookImg={book.link}
         score={book.score}
+        reviews={book.reviews ? book.reviews : 0}
       />
     ));
 
