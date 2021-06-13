@@ -17,7 +17,7 @@ const QuoteOnHeader = (props) => {
             className="w-full h-full absolute opacity-75 bg-black"
           ></span>
         </div>
-        <Quote />
+        <Quote scoreFilterHandler={props.scoreFilterHandler} genreFilterHandler={props.genreFilterHandler} searchHandler={props.searchHandler}/>
         <div
           className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
           style={{ transform: "translateZ(0)" }}

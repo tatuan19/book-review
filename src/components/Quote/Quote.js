@@ -5,6 +5,7 @@ const { Fragment } = require("react");
 
 const Quote = (props) => {
   const [quote, setQuote] = useState([]);
+
   async function getData() {
     const response = await fetch("https://api.quotable.io/random");
     const data = await response.json();
@@ -63,6 +64,7 @@ const Quote = (props) => {
                       id="search"
                       style={{ width: "-webkit-fill-available" }}
                       placeholder="Input search..."
+                      onChange={(e) => { props.searchHandler(e.target.value) }}
                     />
                   </div>
                   <div>
@@ -73,11 +75,15 @@ const Quote = (props) => {
                     >
                       Score:
                     </label>
-                    <select name="score" id="score" style={{ width: "220px" }}>
-                      <option value="2">2 and above</option>
-                      <option value="3">3 and above</option>
-                      <option value="4">4 and above</option>
-                      <option value="5">5</option>
+                    <select name="score" id="score" style={{ width: "220px" }}
+                      onChange={(e) => { props.scoreFilterHandler(e.target.value) }}
+                    >
+                      <option value={0}>All score</option>
+                      <option value={1}>1 and above</option>
+                      <option value={2}>2 and above</option>
+                      <option value={3}>3 and above</option>
+                      <option value={4}>4 and above</option>
+                      <option value={5}>5</option>
                     </select>
                     <label
                       id="genre-label"
@@ -90,7 +96,10 @@ const Quote = (props) => {
                     >
                       Genre:
                     </label>
-                    <select name="genre" id="genre" style={{ width: "236px" }}>
+                    <select name="genre" id="genre" style={{ width: "236px" }}
+                      onChange={(e) => { props.genreFilterHandler(e.target.value) }}
+                    >
+                      <option value="All">All genre</option>
                       <option value="Biography">Biography</option>
                       <option value="Business">Business</option>
                       <option value="History">History</option>

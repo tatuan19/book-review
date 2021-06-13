@@ -16,6 +16,7 @@ const BooksPreview = (props) => {
 
   useEffect(() => {
     sendRequest();
+
   }, [sendRequest]);
 
   if (status === "pending") {
@@ -36,8 +37,16 @@ const BooksPreview = (props) => {
 
   // console.log(loadedBook[0].bookId);
 
-  const createBookLists = loadedBook
-    // .filter((book) => book.score > 4)
+  let filtedBooks = loadedBook.filter((book) => (book.title.search(new RegExp(props.keyword, "i")) > -1));
+  if (props.scoreFilter != 0) {
+    filtedBooks = filtedBooks
+      .filter((book) => (Math.round(book.score * 10 / book.reviews) / 10) >= props.scoreFilter)
+  }
+  if (props.genreFilter != "All") {
+    filtedBooks = filtedBooks.filter((book) => (book.genres == props.genreFilter));
+  }
+
+  const displayedBooks = filtedBooks
     .slice(0, 9)
     .sort((a, b) => b.score - a.score)
     .map((book) => (
@@ -55,7 +64,7 @@ const BooksPreview = (props) => {
   return (
     <Fragment>
       <div className="container mx-auto px-4">
-        <div className="flex flex-wrap">{createBookLists}</div>
+        <div className="flex flex-wrap">{displayedBooks}</div>
       </div>
     </Fragment>
   );
