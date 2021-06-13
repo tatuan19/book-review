@@ -48,7 +48,7 @@ const BooksPreview = (props) => {
 
   const displayedBooks = filtedBooks
     .slice(0, 9)
-    .sort((a, b) => b.score - a.score)
+    .sort((a, b) => (Math.round(b.score * 10 / b.reviews) / 10) - (Math.round(a.score * 10 / a.reviews) / 10))
     .map((book) => (
       <Book
         key={book.bookId}
