@@ -90,12 +90,15 @@ const Detail = (props) => {
           </div>
           <div className="w-full lg:w-4/12 px-4 lg:order-1">
             <div className="flex justify-center py-10 lg:pt-4 pt-8">
-              <div className="mr-4 p-3 text-center">
-                {/* <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
+              <div style={{ color: "salmon", textAlign: "center", fontSize: 24}}>
+                {props.book.reviews ? Math.round(props.book.score * 10 / props.book.reviews) / 10 : 0} <i className="fas fa-star text-yellow"></i> / {props.book.reviews} reviews
+              </div>
+              {/* <div className="mr-4 p-3 text-center">
+                <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
                 {props.book.score}
               </span>
-              <span className="text-sm text-blueGray-400">Book Score</span> */}
-              </div>
+              <span className="text-sm text-blueGray-400">Book Score</span>
+              </div> */}
             </div>
           </div>
 
