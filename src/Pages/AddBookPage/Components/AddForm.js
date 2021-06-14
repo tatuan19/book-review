@@ -47,12 +47,6 @@ const AddFrom = () => {
     isValid: descriptionValid,
   } = useInput(isNotEmpty);
 
-  const { value: enteredPages, valueChangeHandler: pagesChangeHandler } =
-    useInput(() => { });
-
-  const { value: enteredPublish, valueChangeHandler: publishChangeHandler } =
-    useInput(() => { });
-
   useEffect(() => {
     if (status === "completed") {
       history.push(`/book/${enteredBookId}`);
@@ -88,8 +82,6 @@ const AddFrom = () => {
       bookId: enteredBookId,
       author: enteredAuthor,
       description: enteredDescription,
-      pages: enteredPages,
-      publish: enteredPublish,
       link: bookImage,
       score: 0,
       reviews: 0
@@ -181,31 +173,6 @@ const AddFrom = () => {
                       onChange={descriptionChangeHandler}
                       placeholder="Description"
                     ></textarea>
-                  </div>
-
-                  <br></br>
-
-                  <div className="relative w-full mb-3">
-                    <input
-                      id="Pages"
-                      value={enteredPages}
-                      type="number"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      onChange={pagesChangeHandler}
-                      placeholder="Pages (Example : 160)"
-                    />
-                  </div>
-                  <br></br>
-
-                  <div className="relative w-full mb-3">
-                    <input
-                      id="Publish"
-                      value={enteredPublish}
-                      type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      onChange={publishChangeHandler}
-                      placeholder="Publish (Example: NANMEE BOOKS)"
-                    />
                   </div>
                   <br></br>
 
